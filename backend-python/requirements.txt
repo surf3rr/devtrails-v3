@@ -1,0 +1,22 @@
+# ─── Core API ─────────────────────────────────────────────────
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+pydantic==2.10.3
+pydantic-settings==2.6.1
+python-multipart==0.0.12
+
+# ─── Firebase ─────────────────────────────────────────────────
+firebase-admin
+
+# ─── HTTP Client ──────────────────────────────────────────────
+httpx
+requests==2.32.3
+razorpay
+
+# ─── Fraud Engine: Database ───────────────────────────────────
+sqlalchemy==2.0.36
+aiosqlite==0.20.0
+
+# ─── Fraud Engine: ML ────────────────────────────────────────
+scikit-learn==1.5.2
+numpy==1.26.4

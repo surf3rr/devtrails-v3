@@ -1,0 +1,35 @@
+FRAUD DETECTION MODEL TEST RESULTS
+==================================================
+
+[PASS] LEGIT (Bangalore, near event)
+  Score:    0.99
+  Decision: instant_payout
+  Location: 1.0
+  Behavior: 1.0
+  Device:   0.95
+
+[BLOCKED] FRAUD (Delhi, 800km away, bot)
+  Score:    0.07
+  Decision: flagged
+  Location: 0.0
+  Behavior: 0.1
+  Device:   0.2
+
+[BLOCKED] FRAUD (No GPS, 0/0)
+  Score:    0.49
+  Decision: flagged
+  Location: 0.3
+  Behavior: 1.0
+  Device:   0.2
+
+[WARN] BORDERLINE (Chennai, moderate)
+  Score:    0.58
+  Decision: verification_required
+  Location: 0.42
+  Behavior: 0.6
+  Device:   0.95
+
+==================================================
+Score > 0.8  = instant_payout (legit)
+Score 0.5-0.8 = verification_required
+Score < 0.5  = flagged (fraud blocked)

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parametric Guard - Micro-Insurance for Gig Workers</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;0,9..40,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary: #E85D26;
+    --primary-dark: #d14e1a;
+    --bg-color: #F7F5F0;
+    --text-color: #1A1714;
+    --text-muted: #6B6560;
+    --border-color: #E5E0D8;
+    --card-bg: #FFFFFF;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  /* Navigation */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-color);
+    text-decoration: none;
+  }
+
+  .nav-logo-icon {
+    background: var(--primary);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover {
+    color: var(--primary);
+  }
+
+  /* Hero Section */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 80px 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .logo-large {
+    width: 64px; height: 64px;
+    background: var(--primary);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    margin: 0 auto 24px;
+    box-shadow: 0 4px 20px rgba(232,93,38,0.28);
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(40px, 6vw, 64px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .tagline {
+    font-size: 18px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 32px;
+  }
+
+  .divider {
+    width: 60px; height: 3px;
+    background: var(--primary);
+    margin: 0 auto 32px;
+    border-radius: 2px;
+  }
+
+  .description {
+    font-size: 18px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 48px;
+    max-width: 600px;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px; font-weight: 600;
+    padding: 16px 32px;
+    border-radius: 14px;
+    border: none; cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-primary {
+    background: var(--primary); color: white;
+    box-shadow: 0 4px 14px rgba(232,93,38,0.30);
+  }
+  .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(232,93,38,0.36); }
+
+  .btn-secondary {
+    background: #fff; color: var(--text-color);
+    border: 1.5px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(26,23,20,0.05);
+  }
+  .btn-secondary:hover { background: #F0EDE6; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(26,23,20,0.10); }
+
+  /* Features Section */
+  .features {
+    padding: 80px 24px;
+    background: white;
+    width: 100%;
+  }
+
+  .section-title {
+    text-align: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    margin-bottom: 60px;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .feature-card {
+    background: var(--bg-color);
+    padding: 40px;
+    border-radius: 20px;
+    transition: transform 0.3s;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .feature-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(232,93,38,0.1);
+    color: var(--primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  .feature-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+
+  .feature-desc {
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* How it works */
+  .how-it-works {
+    padding: 100px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 60px;
+    position: relative;
+  }
+
+  .step {
+    flex: 1;
+    min-width: 250px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-number {
+    width: 40px; height: 40px;
+    background: var(--text-color);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .step h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .step p {
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    background: var(--text-color);
+    color: white;
+    text-align: center;
+    padding: 80px 24px;
+    margin-top: 40px;
+    width: 100%;
+  }
+
+  .cta-section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+
+  .cta-section p {
+    color: #B0AAA2;
+    margin-bottom: 40px;
+    font-size: 18px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Footer */
+  footer {
+    padding: 40px 24px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    background: var(--text-color);
+    width: 100%;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px; flex-direction: column; gap: 20px; }
+    .nav-links { gap: 16px; }
+    .hero { padding: 60px 20px; }
+    .buttons { flex-direction: column; width: 100%; }
+    .btn { justify-content: center; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+      Parametric Guard
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How it Works</a>
+      <a href="http://localhost:5173" target="_blank">Worker Portal</a>
+      <a href="http://localhost:5174" target="_blank">Admin Portal</a>
+    </div>
+  </nav>
+
+  <main class="hero">
+    <div class="logo-large"><i class="fa-solid fa-cloud-bolt"></i></div>
+    <h1>Parametric Guard</h1>
+    <p class="tagline">"Protecting Gig Workers, One Shift at a Time"</p>
+    
+    <div class="divider"></div>
+    
+    <p class="description">
+      A micro-insurance platform that protects gig workers from income loss due to weather disruptions and uncontrollable external conditions — with automatic weekly payouts and premiums starting at ₹29.
+    </p>
+    
+    <div class="buttons">
+      <a href="http://localhost:5173" target="_blank" class="btn btn-primary"><i class="fa-solid fa-helmet-safety"></i> Enter Worker Dashboard</a>
+      <a href="http://localhost:5174" target="_blank" class="btn btn-secondary"><i class="fa-solid fa-chart-line"></i> View Admin Console</a>
+    </div>
+  </main>
+
+  <section id="features" class="features">
+    <h2 class="section-title">Why Parametric Guard?</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
+        <h3 class="feature-title">Instant Payouts</h3>
+        <p class="feature-desc">No tedious claims process. If weather data hits the trigger threshold in your zone, payouts process automatically within 24 hours.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-coins"></i></div>
+        <h3 class="feature-title">Micro-Premiums</h3>
+        <p class="feature-desc">Affordable weekly deductibles starting at ₹29. Pay only for the shifts you work, specifically tailored to your delivery zones.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h3 class="feature-title">Fraud Protection</h3>
+        <p class="feature-desc">Our proprietary Trust Engine verifies device IPs and historical claims to ensure payouts go to legitimate workers in affected areas.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="how-it-works" class="how-it-works">
+    <h2 class="section-title">How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Select Coverage</h3>
+        <p>Gig workers choose a customized micro-premium plan based on the zones they typically deliver in.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Monitor Triggers</h3>
+        <p>The platform monitors real-time weather and AQI APIs for those specific geographic zones.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Automatic Claim</h3>
+        <p>If conditions cross the trigger threshold (e.g. Heavy Rain > 10mm), an automated claim is filed.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <h3>Receive Payout</h3>
+        <p>Once the Trust Engine validates the worker's presence, the payout is deposited directly.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <h2>Ready to explore the platform?</h2>
+    <p>Check out our live simulation dashboards for both gig workers and platform administrators.</p>
+    <div class="buttons">
+      <a href="http://localhost:5173" target="_blank" class="btn btn-primary"><i class="fa-solid fa-user-astronaut"></i> Try Worker Demo</a>
+      <a href="http://localhost:5174" target="_blank" class="btn btn-secondary" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white;"><i class="fa-solid fa-lock"></i> Try Admin Demo</a>
+    </div>
+  </section>
+
+  <footer>
+    Parametric Guard · Built for DevTrails Hackathon 2025 · Protecting the Gig Economy
+  </footer>
+
+</body>
+</html>

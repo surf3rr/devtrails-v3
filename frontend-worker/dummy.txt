@@ -1,0 +1,20 @@
+# Two Separate Frontends
+
+## Plan
+1. Scaffold **`frontend-worker`** — Full gig worker experience
+2. Scaffold **`frontend-admin`** — Full admin control panel
+
+### `frontend-worker` Pages
+- **Login / Signup** — Firebase Auth
+- **Home Dashboard** — Coverage card, live trigger stats, earnings protected, risk score badge
+- **Claims Page** — History table, claim status tracker
+- **Policy Page** — Weekly premium breakdown, coverage details, simulate event button
+
+### `frontend-admin` Pages
+- **Admin Login** — Separate admin auth
+- **Analytics Dashboard** — KPI cards, Recharts line/bar charts, loss ratio
+- **Claims Manager** — All claims table with trust score + fraud badge
+- **Zone Risk Map** — High-risk zone cards
+- **Fraud Monitor** — Flagged claims list
+
+Both apps: dark mode, glassmorphism, micro-animations, Inter font, premium design.
