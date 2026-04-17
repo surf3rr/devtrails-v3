@@ -45,7 +45,7 @@ export default function LoginPage() {
           platform: form.platform,
           plan: 'basic',
           trustScore: 1.0,
-          createdAt: serverTimestamp(),
+          createdAt: serverTimestamp()
         })
       }
       navigate('/')

@@ -67,6 +67,11 @@ export default function VerificationPage({ user }) {
   useEffect(() => {
     if (step !== 'capture') return
 
+    // Ensure the stream is attached to the video element after it renders
+    if (videoRef.current && streamRef.current && !videoRef.current.srcObject) {
+      videoRef.current.srcObject = streamRef.current
+    }
+
     frameTimerRef.current = setInterval(() => {
       if (!videoRef.current || !canvasRef.current) return
 

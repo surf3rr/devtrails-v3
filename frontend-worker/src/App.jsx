@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './firebaseConfig'
+import { onSnapshot, doc } from 'firebase/firestore'
+import { db } from './firebaseConfig'
 
 import LoginPage from './pages/LoginPage'
 import Dashboard from './pages/Dashboard'
@@ -17,7 +19,10 @@ function ProtectedRoute({ children, user, loading }) {
         minHeight: '100vh', display: 'flex', alignItems: 'center',
         justifyContent: 'center', background: '#0f172a', color: '#64748b', fontSize: '0.9rem'
       }}>
-        Authenticating...
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
+          <div style={{ width: 30, height: 30, border: '3px solid #1e293b', borderTop: '3px solid #22c55e', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+          Authenticating...
+        </div>
       </div>
     )
   }
@@ -26,16 +31,39 @@ function ProtectedRoute({ children, user, loading }) {
 
 export default function App() {
   const [firebaseUser, setFirebaseUser] = useState(null)
+  const [profile, setProfile] = useState(null)
   const [authLoading, setAuthLoading] = useState(true)
 
   useEffect(() => {
-    // Listen to Firebase Auth state — works even on page refresh
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    // 1. Listen to Firebase Auth state
+    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
       setFirebaseUser(user)
-      setAuthLoading(false)
+      if (!user) {
+        setProfile(null)
+        setAuthLoading(false)
+      }
     })
-    return () => unsubscribe()
+    return () => unsubscribeAuth()
   }, [])
+
+  useEffect(() => {
+    // 2. Listen to Firestore Profile state if authenticated
+    if (!firebaseUser) return
+
+    const unsubscribeProfile = onSnapshot(doc(db, 'users', firebaseUser.uid), 
+      (snap) => {
+        if (snap.exists()) {
+          setProfile(snap.data())
+        }
+        setAuthLoading(false)
+      },
+      () => setAuthLoading(false)
+    )
+
+    return () => unsubscribeProfile()
+  }, [firebaseUser])
+
+  const isLoading = authLoading && !profile
 
   return (
     <BrowserRouter>
@@ -44,15 +72,15 @@ export default function App() {
         <Route
           path="/"
           element={
-            <ProtectedRoute user={firebaseUser} loading={authLoading}>
-              <Layout user={firebaseUser} />
+            <ProtectedRoute user={firebaseUser} loading={isLoading}>
+              <Layout user={firebaseUser} profile={profile} />
             </ProtectedRoute>
           }
         >
-          <Route index element={<Dashboard user={firebaseUser} />} />
-          <Route path="claims" element={<ClaimsPage user={firebaseUser} />} />
-          <Route path="policy" element={<PolicyPage user={firebaseUser} />} />
-          <Route path="verify" element={<VerificationPage user={firebaseUser} />} />
+          <Route index element={<Dashboard user={firebaseUser} profile={profile} />} />
+          <Route path="claims" element={<ClaimsPage user={firebaseUser} profile={profile} />} />
+          <Route path="policy" element={<PolicyPage user={firebaseUser} profile={profile} />} />
+          <Route path="verify" element={<VerificationPage user={firebaseUser} profile={profile} />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
