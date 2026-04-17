@@ -17,11 +17,12 @@ const statusConfig = {
   PENDING:           { label: 'Pending',   class: 'badge-blue',   icon: <Clock size={11} /> },
 }
 
-export default function ClaimsPage({ user: firebaseUser }) {
-  const localUser = JSON.parse(localStorage.getItem('worker_user') || '{"name":"Rahul","platform":"Zomato"}')
+export default function ClaimsPage({ user: firebaseUser, profile }) {
+  if (!profile) return <div style={{ padding: '2rem', color: '#64748b' }}>Loading profile...</div>
+
   const user = {
-    name: firebaseUser?.displayName || localUser.name || firebaseUser?.email?.split('@')[0] || 'Worker',
-    platform: localUser.platform || 'Swiggy',
+    name: profile.name || firebaseUser?.displayName || 'Worker',
+    platform: profile.platform || 'Swiggy',
   }
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('ALL')
@@ -31,7 +32,7 @@ export default function ClaimsPage({ user: firebaseUser }) {
   
   const [showModal, setShowModal] = useState(false)
   const [submitting, setSubmitting] = useState(false)
-  const [formData, setFormData] = useState({ upiId: localStorage.getItem('worker_upi') || 'test@tx', reason: 'Manual Claim' })
+  const [formData, setFormData] = useState({ upiId: profile.upiId || 'test@tx', reason: 'Manual Claim' })
   const [locationStatus, setLocationStatus] = useState('Pending')
 
   const fetchClaims = () => {

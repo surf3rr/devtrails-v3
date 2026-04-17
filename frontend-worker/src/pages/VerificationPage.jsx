@@ -12,7 +12,7 @@ const POSE_STEPS = [
   { id: 'nod',      label: 'Nod your head slightly',       icon: '↕️' },
 ]
 
-export default function VerificationPage({ user }) {
+export default function VerificationPage({ user, profile }) {
   const videoRef = useRef(null)
   const canvasRef = useRef(null)
   const streamRef = useRef(null)
@@ -28,7 +28,7 @@ export default function VerificationPage({ user }) {
   const [poseProgress, setPoseProgress] = useState(0)  // 0-100 for current pose
 
   const navigate = useNavigate()
-  const userId = user?.uid || user?.email || localStorage.getItem('worker_user') ? JSON.parse(localStorage.getItem('worker_user') || '{}').name : 'worker'
+  const userId = user?.uid || user?.email || profile?.name || 'worker'
 
   // ── Camera utilities ───────────────────────────────────────────────────────
   const startCamera = async () => {
